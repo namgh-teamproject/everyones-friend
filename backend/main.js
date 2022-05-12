@@ -12,13 +12,12 @@ app.use(express.json());
 
 app.use(cors());
 
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
+//app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 const connection = mysql.createConnection({
   host: "34.64.250.197",
-  port: 3306,
   user: "project",
-  password: "",
+  password: "root",
   database: "project",
 });
 
