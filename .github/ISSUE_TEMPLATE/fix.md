@@ -1,17 +1,14 @@
 ---
-name: Feat
-about: Suggest an idea for this project
+name: FIX
+about: Describe this issue template's purpose here.
 title: ''
 labels: ''
-assignees: namgh-teamproject
+assignees: ''
 
 ---
 
 ## 기능 설명
-
-#### 기존 상태
-
-#### 새로운 상태
+#### 추가할 기능에 대한 설명을 적어주세요.
 
 ## 작업 목록 
 - [ ] 작업할 내용을 적어주세요.
