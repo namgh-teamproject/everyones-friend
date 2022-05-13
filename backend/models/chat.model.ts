@@ -6,6 +6,7 @@ const chatSchema = new mongoose.Schema({
   content: String,
   email: String,
   roomname: String,
+  url: String,
 });
 
 export const Chat = mongoose.model("Chat", chatSchema);

@@ -8,12 +8,11 @@ import userRouter from "./routers/userrouter";
 dotenv.config();
 
 const app = express();
-
 app.use(express.json());
-
 app.use(cors());
 
 app.use("/user", userRouter);
+
 //app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 const connection = mysql.createConnection({
@@ -23,6 +22,6 @@ const connection = mysql.createConnection({
   database: "project",
 });
 
-mongoose.connect("mongodb://my_database:27017/project");
+// mongoose.connect("mongodb://my_database:27017/project");
 connection.connect();
 app.listen(3000);
