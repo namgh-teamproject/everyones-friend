@@ -22,6 +22,8 @@ const connection = mysql.createConnection({
   database: "project",
 });
 
+console.log("hello");
+
 // mongoose.connect("mongodb://my_database:27017/project");
 connection.connect();
 app.listen(3000);

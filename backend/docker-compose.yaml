@@ -9,7 +9,7 @@ services:
       - 3000:3000
     volumes:
       - .env:/my_backend/.env
-      - ../backend:/my_backend/backend
+      - ./:/my_backend/
 
   my_database:
     image: mongo:latest
