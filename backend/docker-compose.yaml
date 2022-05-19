@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  my_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .env:/my_backend/.env
+      - ./:/my_backend/
+
+  my_database:
+    image: mongo:latest
+    ports:
+      - 27017:27017
