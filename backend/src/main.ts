@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import mysql from "mysql";
 import userRouter from "./routers/userrouter";
+import { ConnectionOptions, createConnection } from "typeorm";
 
 dotenv.config();
 
@@ -15,22 +16,27 @@ app.use("/user", userRouter);
 
 //app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
-const connection = mysql.createConnection({
+const Mysqlconfig: ConnectionOptions = {
+  type: "mysql",
   host: "34.64.250.197",
   port: 3306,
-  user: "project",
+  username: "project",
   password: "root",
   database: "project",
-  entities: [
-    __dirname + "**/**.entity.ts",
-    // '**/**.entity.js'
-  ],
   synchronize: true,
   logging: true,
-});
+  entities: ["src/entities/*.ts"],
+};
 
-console.log("hello");
+// const dbCreateConnection = async () => {
+//   await createConnection(Mysqlconfig);
+// };
+
+(async () => {
+  await createConnection(Mysqlconfig);
+})();
 
 // mongoose.connect("mongodb://my_database:27017/project");
-connection.connect();
+console.log("hello");
+
 app.listen(3000);

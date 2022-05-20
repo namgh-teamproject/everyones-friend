@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity("User")
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -8,10 +8,10 @@ export class User {
   @Column({ default: "user" })
   role: string;
 
-  @Column("double")
+  @Column("double", { nullable: true })
   latitude: number;
 
-  @Column("double")
+  @Column("double", { nullable: true })
   longitude: number;
 
   @Column()
@@ -20,12 +20,12 @@ export class User {
   @Column()
   phonenumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   mbti: string;
 
-  @Column()
+  @Column({ nullable: true })
   hobby: string;
 }
