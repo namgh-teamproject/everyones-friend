@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity("User")
 export class User {
@@ -14,10 +21,13 @@ export class User {
   @Column("double", { nullable: true })
   longitude: number;
 
-  @Column()
+  @Column({ nullable: true })
   nickname: string;
 
-  @Column()
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
   phonenumber: string;
 
   @Column({ nullable: true })
@@ -28,4 +38,13 @@ export class User {
 
   @Column({ nullable: true })
   hobby: string;
+
+  @CreateDateColumn({ nullable: true })
+  createat: Date;
+
+  @UpdateDateColumn({ nullable: true })
+  updateat: Date;
+
+  @DeleteDateColumn({ nullable: true })
+  deleteat: Date;
 }
