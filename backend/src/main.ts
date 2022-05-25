@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import mysql from "mysql";
 import userRouter from "./routers/userrouter";
 import { ConnectionOptions, createConnection } from "typeorm";
 
@@ -27,10 +26,6 @@ const Mysqlconfig: ConnectionOptions = {
   logging: true,
   entities: ["src/entities/*.ts"],
 };
-
-// const dbCreateConnection = async () => {
-//   await createConnection(Mysqlconfig);
-// };
 
 (async () => {
   await createConnection(Mysqlconfig);
