@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routers/userrouter";
+import channelRouter from "./routers/channelRouter";
 import { ConnectionOptions, createConnection } from "typeorm";
 
 dotenv.config();
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/user", userRouter);
-
+app.use("/channel", channelRouter);
 //app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 const Mysqlconfig: ConnectionOptions = {
