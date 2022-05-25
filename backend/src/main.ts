@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mysql from "mysql";
 import userRouter from "./routers/userrouter";
 import { ConnectionOptions, createConnection } from "typeorm";
+import channelRouter from "./routers/channelRouter";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/user", userRouter);
-
+app.use("/channel", channelRouter);
 //app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
 
 const Mysqlconfig: ConnectionOptions = {
