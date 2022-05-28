@@ -1,0 +1,28 @@
+post:
+  summary: create new channel
+  tags:
+    - channel
+  parameters:
+    - in: body
+      name: channel
+      required: true
+      description: body 객체(! = 필수, ? = 누락가능)
+      schema:
+        type: object
+        example:
+          title: string!
+          intro: string!
+          description: string!
+          url: string?
+          capacity: integer!
+          hobby: string!
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+
+  responses:
+    "200":
+      description: 모임 생성 성공
