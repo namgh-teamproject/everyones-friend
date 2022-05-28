@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 오늘의 친구 API docs
+  description: today's friends api-docs
+  license:
+    name: MIT
+servers:
+  - url: 'http://localhost:3000/'
+paths:
+  /user:
+    get:
+      summary: get User
+      tags:
+        - user
+      responses:
+        '200':
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /channel/get:
+    get:
+      summary: get channel
+      tags:
+        - channel
+      responses:
+        '200':
+          description: A JSON array of channel names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /channel/create:
+    post:
+      summary: create new channel
+      tags:
+        - channel
+      parameters:
+        - in: body
+          name: channel
+          required: true
+          description: 'body 객체(! = 필수, ? = 누락가능)'
+          schema:
+            type: object
+            example:
+              title: string!
+              intro: string!
+              description: string!
+              url: string?
+              capacity: integer!
+              hobby: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 모임 생성 성공
+components:
+  parameters: null
+  schemas:
+    User:
+      type: object
+      required:
+        - _id
+        - name
+      properties:
+        _id:
+          type: number
+          description: id
+        name:
+          type: string
+          description: 유저 이름
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: 잘못된 요청
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: 잘못된 요청
+    InternalServerError:
+      description: 서버 에러
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: 서버 내부 오류
