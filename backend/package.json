@@ -13,6 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/jest": "^27.5.1",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "cheerio": "^1.0.0-rc.10",
@@ -21,8 +22,10 @@
     "express": "^4.17.2",
     "jest": "^28.1.0",
     "mongoose": "^6.1.7",
-    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
+    "socket.io": "^4.5.1",
+    "socket.io-client": "^4.5.1",
     "swagger-cli": "^4.0.4",
     "swagger-ui-express": "^4.3.0",
     "typeorm": "^0.2.41",

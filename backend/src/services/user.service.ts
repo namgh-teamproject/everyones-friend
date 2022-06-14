@@ -4,7 +4,7 @@ import { getRepository } from "typeorm";
 import { error } from "console";
 import * as bcrypt from "bcrypt";
 
-export class Userservice {
+export class UserService {
   constructor() {}
   static create = async (req: Request, res: Response) => {
     const userrepository = getRepository(User);
