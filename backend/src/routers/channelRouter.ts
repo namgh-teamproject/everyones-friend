@@ -1,8 +1,8 @@
 import express from "express";
-import { Channelservice } from "../services/channel.service";
+import { ChannelService } from "../services/channel.service";
 
 const channelRouter = express.Router();
 
-channelRouter.post("/create", Channelservice.create);
+channelRouter.post("/create", ChannelService.create);
 
 export default channelRouter;

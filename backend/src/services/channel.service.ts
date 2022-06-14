@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { Channel } from "../entities/channel.entity";
 import { getRepository } from "typeorm";
+import { error } from "console";
 
-export class Channelservice {
+export class ChannelService {
   constructor() {}
   static create = async (req: Request, res: Response) => {
     try {
@@ -12,8 +13,7 @@ export class Channelservice {
       });
       res.send("모임이 생성되었습니다!");
     } catch (err) {
-      console.log(err);
-      throw err;
+      res.send(err.sqlMessage);
     } finally {
       return;
     }

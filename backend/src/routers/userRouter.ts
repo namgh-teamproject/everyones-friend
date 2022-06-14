@@ -1,12 +1,12 @@
 import express from "express";
-import { Userservice } from "../services/user.service";
+import { UserService } from "../services/user.service";
 
 const userRouter = express.Router();
 
-userRouter.post("/create", Userservice.create);
+userRouter.post("/create", UserService.create);
 
-userRouter.put("/update", Userservice.update);
+userRouter.put("/update", UserService.update);
 
-userRouter.delete("/delete", Userservice.delete);
+userRouter.delete("/delete", UserService.delete);
 
 export default userRouter;
