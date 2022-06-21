@@ -1,19 +1,17 @@
 post:
-  summary: 회원 가입(생성)
+  summary: 로그인
   tags:
-    - user
+    - auth
   parameters:
     - in: body
-      name: user
+      name: account
       required: true
-      description: 생성할 유저 정보
+      description: 로그인 정보
       schema:
         type: object
         example:
           email: string!
           password: string!
-          nickname: string!
-
   requestBody:
     content:
       application/json:
@@ -22,4 +20,9 @@ post:
 
   responses:
     "200":
-      description: 유저 생성 성공
+      description: "로그인 성공"
+      content:
+        text/plain:
+          schema:
+            type: boolean
+            example: true

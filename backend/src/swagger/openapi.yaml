@@ -16,14 +16,46 @@ components:
       type: object
       required:
         - _id
-        - name
+        - email
+        - nickname
+        - password
+        - createat
       properties:
         _id:
-          type: number
-          description: id
-        name:
+          type: string
+          description: uuid
+        email:
+          type: string
+          description: 유저 이메일
+        nickname:
           type: string
           description: 유저 이름
+        password:
+          type: string
+          description: 유저 비밀번호
+        createat:
+          type: date
+          description: 회원 생성일
+    channel:
+      type: object
+      required:
+        - _id
+        - title
+        - intro
+        - description
+      properties:
+        _id:
+          type: string
+          description: uuid
+        title:
+          type: string
+          description: 채널 이름
+        intro:
+          type: string
+          description: 채널 소개
+        description:
+          type: string
+          description: 채널 상세설명
     Error:
       type: object
       properties:

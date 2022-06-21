@@ -11,15 +11,6 @@ export class Channel {
   @Column()
   intro: string;
 
-  @Column()
-  description: string;
-
   @Column({ nullable: true })
-  url: string;
-
-  @Column()
-  capacity: number;
-
-  @Column()
-  hobby: string;
+  description: string;
 }
