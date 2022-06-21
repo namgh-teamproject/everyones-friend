@@ -1,12 +1,12 @@
 post:
-  summary: create new channel
+  summary: 새로운 채널 생성
   tags:
     - channel
   parameters:
     - in: body
       name: channel
       required: true
-      description: body 객체(! = 필수, ? = 누락가능)
+      description: 생성할 채널 정보
       schema:
         type: object
         example:
@@ -16,7 +16,6 @@ post:
           url: string?
           capacity: integer!
           hobby: string!
-
   requestBody:
     content:
       application/json:
@@ -25,4 +24,4 @@ post:
 
   responses:
     "200":
-      description: 모임 생성 성공
+      description: 채널 생성 성공

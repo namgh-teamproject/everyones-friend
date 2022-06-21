@@ -4,8 +4,7 @@ const chatSchema = new mongoose.Schema({
   nickname: String,
   date: String,
   content: String,
-  roomId: String,
-  // url: String,
+  channel: String,
 });
 
 export const Chat = mongoose.model("Chat", chatSchema);

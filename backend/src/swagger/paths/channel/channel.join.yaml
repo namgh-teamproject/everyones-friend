@@ -1,18 +1,17 @@
 post:
-  summary: 회원 가입(생성)
+  summary: 채널 가입
   tags:
-    - user
+    - channel
   parameters:
     - in: body
-      name: user
+      name: user email, channelId
       required: true
-      description: 생성할 유저 정보
+      description: 유저 이메일, 가입할 채널Id
       schema:
         type: object
         example:
           email: string!
-          password: string!
-          nickname: string!
+          channel: string!
 
   requestBody:
     content:
@@ -22,4 +21,4 @@ post:
 
   responses:
     "200":
-      description: 유저 생성 성공
+      description: 채널 가입 성공

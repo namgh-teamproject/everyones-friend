@@ -13,54 +13,38 @@ export class UserService {
     console.log(check);
     if (check) throw new error("등록된 이메일입니다");
 
-    const {
-      id,
-      nickname,
-      phonenumber,
-      password,
-      email,
-      mbti,
-      hobby,
-      latitude,
-      longitude,
-    } = req.body;
+    const { nickname, password, email } = req.body;
     const hash = await bcrypt.hash(password, 2);
     const newcreate = {
       nickname,
-      phonenumber,
       password: hash,
       email,
-      mbti,
-      hobby,
-      latitude,
-      longitude,
     };
     await userrepository.save(newcreate);
-    res.send(newcreate);
+    res.send("유저 생성 성공");
     return;
   };
 
   static update = async (req: Request, res: Response) => {
-    const { email, password, ...rest } = req.body;
+    const { email, password, nickname } = req.body;
     const userrepository = getRepository(User);
     const user = await userrepository.findOne({ email });
-    if (!user) throw new error("회원가입 해주세요");
+    if (!user) throw new error("회원 조회 실패");
 
     const hash = await bcrypt.hash(password, 2);
     console.log(hash, password);
-    await userrepository.save({ id: user.id, password: hash, ...rest });
-    res.send(req.body);
+    await userrepository.save({ id: user.id, email, password: hash, nickname });
+    res.send("정보 수정 성공");
     return;
   };
 
   static delete = async (req: Request, res: Response) => {
-    const { email, ...rest } = req.body;
+    const { email } = req.body;
     const userrepository = getRepository(User);
     const user = await userrepository.findOne({ email });
     if (!user) throw new error("이미 삭제된 회원입니다");
 
-    await userrepository.softDelete({ id: user.id });
-    console.log("hihihihihi");
+    await userrepository.delete({ id: user.id });
     res.send("회원탈퇴 되었습니다");
     return;
   };
