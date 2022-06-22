@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./routers/userrouter";
+import userRouter from "./routers/userRouter";
 import channelRouter from "./routers/channelRouter";
 import authRouter from "./routers/auth.Router";
 import { ConnectionOptions, createConnection } from "typeorm";
@@ -11,8 +11,6 @@ import YAML from "yamljs";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import { Chat } from "./models/chat.model";
-
-dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,6 +21,7 @@ app.use("/user", userRouter);
 app.use("/channel", channelRouter);
 app.use("/", authRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+dotenv.config();
 
 const io = new Server(httpServer, {
   cors: {
@@ -32,11 +31,11 @@ const io = new Server(httpServer, {
 
 const Mysqlconfig: ConnectionOptions = {
   type: "mysql",
-  host: "localhost",
+  host: process.env.DB_IP,
   port: 3306,
   username: "root",
-  password: "root",
-  database: "project",
+  password: process.env.DB_PW,
+  database: "myproject",
   synchronize: true,
   logging: true,
   entities: ["src/entities/*.ts"],
