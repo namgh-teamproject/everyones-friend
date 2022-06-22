@@ -65,13 +65,13 @@ io.on("connection", (client: Socket) => {
         message: msg,
         date: d,
       });
-      // const chat = new Chat({
-      //   nickname: client.data.nickname,
-      //   date: d,
-      //   content: msg,
-      //   channel: client.data.roomId,
-      // });
-      // await chat.save();
+      const chat = new Chat({
+        nickname: client.data.nickname,
+        date: d,
+        content: msg,
+        channel: client.data.roomId,
+      });
+      await chat.save();
     }
   );
 
@@ -90,7 +90,7 @@ io.on("connection", (client: Socket) => {
 });
 /* ======================================== */
 
-// mongoose.connect("mongodb://my_database:27017/chat_storage");
+mongoose.connect(process.env.MONGODB);
 console.log("hello");
 
 httpServer.listen(3000);
