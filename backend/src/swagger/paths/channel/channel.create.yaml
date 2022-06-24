@@ -25,3 +25,7 @@ post:
   responses:
     "200":
       description: 채널 생성 성공
+    "400":
+      description: Bad Request
+    "500":
+      description: Internal Server Error
