@@ -1,0 +1,261 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 오늘의 친구 API docs
+  description: today's friends api-docs
+  license:
+    name: MIT
+paths:
+  /user/create:
+    post:
+      summary: 회원 가입(생성)
+      tags:
+        - user
+      parameters:
+        - in: body
+          name: user
+          required: true
+          description: 생성할 유저 정보
+          schema:
+            type: object
+            example:
+              email: string!
+              password: string!
+              nickname: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 유저 생성 성공
+  /user/update:
+    put:
+      summary: 유저 정보 수정
+      tags:
+        - user
+      parameters:
+        - in: body
+          name: user
+          description: 수정할 유저 정보
+          schema:
+            type: object
+            example:
+              email: string!
+              password: string?
+              nickname: string?
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 정보 수정 성공
+  /user/delete:
+    delete:
+      summary: 회원 탈퇴
+      tags:
+        - user
+      parameters:
+        - in: body
+          name: user email
+          required: true
+          description: 삭제할 유저 이메일
+          schema:
+            type: object
+            example:
+              email: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 탈퇴 성공
+  /channel/create:
+    post:
+      summary: 새로운 채널 생성
+      tags:
+        - channel
+      parameters:
+        - in: body
+          name: channel
+          required: true
+          description: 생성할 채널 정보
+          schema:
+            type: object
+            example:
+              title: string!
+              intro: string!
+              description: string!
+              url: string?
+              capacity: integer!
+              hobby: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 채널 생성 성공
+  /channel/join:
+    post:
+      summary: 채널 가입
+      tags:
+        - channel
+      parameters:
+        - in: body
+          name: 'user email, channelId'
+          required: true
+          description: '유저 이메일, 가입할 채널Id'
+          schema:
+            type: object
+            example:
+              email: string!
+              channel: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 채널 가입 성공
+  /channel/find:
+    get:
+      summary: 가입한 채널 조회
+      tags:
+        - channel
+      parameters:
+        - in: headers
+          name: user email
+          required: true
+          description: 유저 이메일
+          schema:
+            type: object
+            example:
+              email: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: A JSON array of joined channel
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  example:
+                    id: 채널 id
+                    title: 채널 이름
+                    intro: 채널 소개
+                    description: 채널 상세설명
+  /login:
+    post:
+      summary: 로그인
+      tags:
+        - auth
+      parameters:
+        - in: body
+          name: account
+          required: true
+          description: 로그인 정보
+          schema:
+            type: object
+            example:
+              email: string!
+              password: string!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            text/plain:
+              schema:
+                type: boolean
+                example: true
+components:
+  parameters: null
+  schemas:
+    User:
+      type: object
+      required:
+        - _id
+        - email
+        - nickname
+        - password
+        - createat
+      properties:
+        _id:
+          type: string
+          description: uuid
+        email:
+          type: string
+          description: 유저 이메일
+        nickname:
+          type: string
+          description: 유저 이름
+        password:
+          type: string
+          description: 유저 비밀번호
+        createat:
+          type: date
+          description: 회원 생성일
+    channel:
+      type: object
+      required:
+        - _id
+        - title
+        - intro
+        - description
+      properties:
+        _id:
+          type: string
+          description: uuid
+        title:
+          type: string
+          description: 채널 이름
+        intro:
+          type: string
+          description: 채널 소개
+        description:
+          type: string
+          description: 채널 상세설명
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: 잘못된 요청
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: 잘못된 요청
+    InternalServerError:
+      description: 서버 에러
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            success: false
+            message: 서버 내부 오류

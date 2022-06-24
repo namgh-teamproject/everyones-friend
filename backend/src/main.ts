@@ -2,41 +2,95 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import mysql from "mysql";
-import userRouter from "./routers/userrouter";
+import userRouter from "./routers/userRouter";
+import channelRouter from "./routers/channelRouter";
+import authRouter from "./routers/auth.Router";
 import { ConnectionOptions, createConnection } from "typeorm";
-
-dotenv.config();
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
+import { Chat } from "./models/chat.model";
 
 const app = express();
+const httpServer = createServer(app);
+const swaggerSpec = YAML.load("./src/swagger/build.yaml");
 app.use(express.json());
 app.use(cors());
-
 app.use("/user", userRouter);
+app.use("/channel", channelRouter);
+app.use("/", authRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+dotenv.config();
 
-//app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsdoc(options)));
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 
 const Mysqlconfig: ConnectionOptions = {
   type: "mysql",
-  host: "34.64.250.197",
+  host: process.env.DB_IP,
   port: 3306,
-  username: "project",
-  password: "root",
-  database: "project",
+  username: "root",
+  password: process.env.DB_PW,
+  database: "myproject",
   synchronize: true,
   logging: true,
   entities: ["src/entities/*.ts"],
 };
 
-// const dbCreateConnection = async () => {
-//   await createConnection(Mysqlconfig);
-// };
-
 (async () => {
   await createConnection(Mysqlconfig);
 })();
 
-// mongoose.connect("mongodb://my_database:27017/project");
+/* =================socket================= */
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+io.on("connection", (client: Socket) => {
+  console.log("connected ", client.id);
+  client.leave(client.id);
+  client.data.roomId = `room:lobby`;
+  client.join("room:lobby");
+
+  client.on(
+    "getMessage",
+    async (msg: string, roomId: string): Promise<void> => {
+      const d = new Date();
+      client.to(roomId).emit("sendMessage", {
+        nickname: client.data.nickname,
+        message: msg,
+        date: d,
+      });
+      const chat = new Chat({
+        nickname: client.data.nickname,
+        date: d,
+        content: msg,
+        channel: client.data.roomId,
+      });
+      await chat.save();
+    }
+  );
+
+  client.on("enterChannel", async (roomId: string) => {
+    if (client.rooms.has(roomId)) {
+      return;
+    }
+    client.rooms.clear();
+    client.data.roomId = roomId;
+    client.join(roomId);
+  });
+
+  client.on("disconnect", () => {
+    console.log("! disconnected ", client.id);
+  });
+});
+/* ======================================== */
+
+mongoose.connect(process.env.MONGODB);
 console.log("hello");
 
-app.listen(3000);
+httpServer.listen(3000);

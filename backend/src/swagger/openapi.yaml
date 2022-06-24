@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: 오늘의 친구 API docs
+  description: today's friends api-docs
+  license:
+    name: MIT
+paths:
+  $ref: "./paths/_index.yaml"
+components:
+  parameters: null
+  schemas:
+    User:
+      type: object
+      required:
+        - _id
+        - email
+        - nickname
+        - password
+        - createat
+      properties:
+        _id:
+          type: string
+          description: uuid
+        email:
+          type: string
+          description: 유저 이메일
+        nickname:
+          type: string
+          description: 유저 이름
+        password:
+          type: string
+          description: 유저 비밀번호
+        createat:
+          type: date
+          description: 회원 생성일
+    channel:
+      type: object
+      required:
+        - _id
+        - title
+        - intro
+        - description
+      properties:
+        _id:
+          type: string
+          description: uuid
+        title:
+          type: string
+          description: 채널 이름
+        intro:
+          type: string
+          description: 채널 소개
+        description:
+          type: string
+          description: 채널 상세설명
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+  responses:
+    BadRequest:
+      description: 잘못된 요청
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            message: 잘못된 요청
+    InternalServerError:
+      description: 서버 에러
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            message: 서버 내부 오류

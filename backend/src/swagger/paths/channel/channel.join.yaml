@@ -1,0 +1,24 @@
+post:
+  summary: 채널 가입
+  tags:
+    - channel
+  parameters:
+    - in: body
+      name: user email, channelId
+      required: true
+      description: 유저 이메일, 가입할 채널Id
+      schema:
+        type: object
+        example:
+          email: string!
+          channel: string!
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+
+  responses:
+    "200":
+      description: 채널 가입 성공

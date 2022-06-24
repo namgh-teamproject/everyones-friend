@@ -2,6 +2,8 @@ version: "3.3"
 
 services:
   my_backend:
+    platform: linux/amd64
+    image: asia.gcr.io/resolute-world-344710/my_backend:1.7
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,9 +11,3 @@ services:
       - 3000:3000
     volumes:
       - .env:/my_backend/.env
-      - ./:/my_backend/
-
-  my_database:
-    image: mongo:latest
-    ports:
-      - 27017:27017

@@ -1,0 +1,23 @@
+delete:
+  summary: 회원 탈퇴
+  tags:
+    - user
+  parameters:
+    - in: body
+      name: user email
+      required: true
+      description: 삭제할 유저 이메일
+      schema:
+        type: object
+        example:
+          email: string!
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+
+  responses:
+    "200":
+      description: 탈퇴 성공

@@ -1,0 +1,23 @@
+put:
+  summary: 유저 정보 수정
+  tags:
+    - user
+  parameters:
+    - in: body
+      name: user
+      description: 수정할 유저 정보
+      schema:
+        type: object
+        example:
+          email: string!
+          password: string?
+          nickname: string?
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+
+  responses:
+    "200":
+      description: 정보 수정 성공
