@@ -45,7 +45,7 @@ export class UserService {
     if (!user) throw new error("이미 삭제된 회원입니다");
 
     await userrepository.delete({ id: user.id });
-    res.send("회원탈퇴 되었습니다");
+    res.send("탈퇴 성공");
     return;
   };
 }
